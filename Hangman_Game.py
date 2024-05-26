@@ -1,6 +1,7 @@
 # Notes:
 
 # 1. Import a hidden word.
+
 import random
 class Word:
     list_with_words = ["people", "school", "family", "student", "country", "problem", "system", "program", "question",
@@ -21,12 +22,16 @@ class Word:
 
 
 # 2. Create a list with all the letters of the alphabet that checks which letter have used.
+
 Alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
     "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
+
+
 # 3. Create a function of the players view.
 # 3.1. Print the len of the word with _.
-# 3.2 if the guessing letter is in word replace it.
+# 3.2 If the guessing letter is in word replace it.
+
 class Display:
     def display_word(word):
         players_view = []
@@ -40,13 +45,15 @@ class Display:
 # 4. Create an input for the player to guess a letter.
 # 4.1 Create a method that checks if the letter is in the hidden word.
     # 4.1.1 Create a method that counts the mistakes.
-    # 4.1.2 input a letter.
-    # 4.1.3Be sure that is one letter and not anything else.
-# 4.2 if the letter is in the word, replace the _ with the letter.
+    # 4.1.2 Input a letter.
+    # 4.1.3 Be sure that is one letter and not anything else.
+# 4.2 If the letter is in the word, replace the _ with the letter.
+    # 4.2.1 If the letter is not in the word, add to the mistakes.
 # 4.3 Create a method that checks if the player guess all the letters.
     # 4.3.1 If the player guess all the letters, the player win.
  # 4.4 Create a method that checks if the player lost.
-    # 4.4.1 If the mistakes is more than 6, the player lose
+    # 4.4.1 If the mistakes is more than 6, the player lose.
+
 class Game:
     def __init__(self, word):
         self.word = word
@@ -77,7 +84,7 @@ class Game:
                     if letter == self.word[i]:
                         self.players_view[i] = letter
                 self.players_view_str = ''.join(self.players_view)
-                    # if the letter is not in the word, add to the mistakes.
+                
             else:
                 self.mistakes += 1
                 print(f"Wrong guess! Mistakes: {self.mistakes}")
@@ -88,16 +95,8 @@ class Game:
             print("congratulation! You guessed the word")
 
 
-
-
-
 word = Word.word_choice()
 print(word)
 game = Game(word)
 game.check_letter()
 print(word)
-
-
-
-
-
