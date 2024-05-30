@@ -191,3 +191,144 @@ class GameLoop:
 word = Word.word_choice()
 game = Hangman(word)
 game.play_now()
+
+
+
+
+
+
+
+
+# THIRD TRY
+
+
+import random
+
+class Word:
+
+    list_with_words = ["people", "school", "family", "student", "country", "problem", "system", "program",
+                       "question", "company", "government", "number", "mother", "community", "president", "minute",
+                       "information", "parent", "others", "office", "health", "person", "history", "result", "change",
+                       "morning", "reason", "research", "teacher", "education", "word", "business", "issue", "kind", "service",
+                       "friend", "father", "power", "minute", "moment", "others", "community", "information", "history",
+                       "result", "change", "morning", "reason", "research", "teacher", "education", "system", "program",
+                       "question", "company", "government", "number", "mother", "community", "president", "minute",
+                       "information", "parent", "others", "office", "health", "person", "history", "result", "change",
+                       "morning", "reason", "research", "teacher", "education", "problem", "community", "president", "information",
+                       "history", "result", "morning", "reason", "research", "teacher", "education", "community",
+                       "president", "information", "history", "result", "morning", "research", "teacher"]
+
+    def word_choice():
+        word = random.choice(Word.list_with_words)
+        return word
+
+
+# Hangman class Responsibilities:
+
+# 1. Start the game. Welcome the player and show the hidden word with underscores.
+# 2. Ask the player for a letter.
+    # 2.1 Check the input if is one letter from the alphabet, and it is,
+    # 2.2 replace each underscore with the correct letter guessed by the player in the appropriate position.
+# 3. Show the player the letters they have chosen.
+# 4. Announce whether the player have won or lost the game.
+
+class Hangman:
+    def __init__(self, word):
+        self.game_loop = GameLoop(word)
+
+    # 1. Start the game. Welcome the player and show the hidden word with underscores.
+    def start_the_game(self):
+        self.game_loop.play_now()
+
+    # 2. Ask the player for a letter.
+    # 2.1 Check the input if is one letter from the alphabet, and it is,
+    # 2.2 replace each underscore with the correct letter guessed by the player in the appropriate position.
+    def input(self):
+        letter = input("Guess a letter:").lower()
+        if self.game_loop.check_input(letter):
+            self.game_loop.check_words_letter()
+
+    # 3. Show the player the letters they have chosen.
+    def mistakes(self):
+        print(f"Wrong guess! Mistakes: {self.mistakes}")
+
+    # 4. Announce whether the player have won or lost the game.
+    def result(self):
+        result = self.game_loop.win_or_loss()
+        if result:
+            print(result)
+
+
+
+class GameLoop:
+    def __init__(self, word):
+        self.word = word
+        self.players_view = '_' * len(word)
+        self.mistakes = 0
+        self.chosen_letters = []
+        self.Alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
+                "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+    def display_state(self):
+        print("Welcome to Hangman!")
+        print(f"Word: {' '.join(self.players_view)}")
+        print(f"Mistakes: {self.mistakes}")
+        print(f"Chosen letters: {', '.join(self.chosen_letters)}")
+
+
+    def play_now(self):
+        while self.mistakes < 6 and '_' in self.players_view:
+            self.display_state()
+            letter = input("Guess a letter:").lower()
+            if not self.check_input(letter):
+                continue
+            self.check_words_letter(letter)
+            self.display_state()
+            result = self.win_or_loss()
+            if result:
+                print(result)
+                break
+
+    def check_input(self, letter):
+        if len(letter) != 1 or not letter.isalpha():
+            print("You should choose one letter from the alphabet.")
+            return False
+        elif letter in self.chosen_letters:
+            print("You have already chosen this letter.")
+            return False
+        self.chosen_letters.append(letter)
+        return True
+
+    def check_words_letter(self, letter):
+        if letter in self.word:
+            self.players_view = [letter if letter == self.word[i] else self.players_view[i] for i in range(len(self.word))]
+        else:
+            self.mistakes += 1
+
+
+    def win_or_loss(self):
+        if self.mistakes >= 6:
+            return "You lost"
+        elif '_' not in self.players_view:
+            return "congratulation! You guessed the word"
+        else:
+            None
+
+
+
+word = Word.word_choice()
+game = Hangman(word)
+game.start_the_game()
+
+
+
+
+
+
+
+
+
+
+
+
+
