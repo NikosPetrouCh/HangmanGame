@@ -1,5 +1,5 @@
 {
-    "filename": "<simplewords.dct>",
+    "filename": "simplewords.dct",
     "description": "Simple Words",
     "level": 1,
     "words": ["people", "school", "family", "student", "country", "problem", "system", "program", "question", "company", "number", "mother", "community", "parent", "others", "office", "health", "person", "word", "friend", "father", "moment", "power", "reason", "kind"]
