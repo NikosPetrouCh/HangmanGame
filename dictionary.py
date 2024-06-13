@@ -9,15 +9,12 @@ class DctChoice:
 
     def __init__(self, folder):
         self.dicts_folder = folder
-        self.file_paths = [os.path.join(self.dicts_folder, p) for p in os.listdir(self.dicts_folder) if p.endswith('.dct')]
+        self.file_paths = [os.path.join(self.dicts_folder, p) for p in os.listdir(self.dicts_folder) 
+                           if p.endswith('.dct')]
         self.dictionaries = [self.load_dict(p) for p in self.file_paths]
         self.dictionaries = sorted(self.dictionaries, key=lambda d: d['level'])
 
-        if not os.path.exists(self.dicts_folder):
-            print(f"Directory '{self.dicts_folder}' does not exist.")
-        if not os.path.isdir(self.dicts_folder):
-            raise FileNotFoundError(f"The path '{self.dicts_folder}' is not a directory.")
-            
+
     def load_dict(self, path):
         try:
             with open(path) as json_data:
@@ -41,9 +38,13 @@ class DctChoice:
 
     def get_file_paths(self):
         try:
-            if not os.path.exists(self.dicts_folder) or not os.listdir(self.dicts_folder):
-                print(f"Error: The folder '{self.dicts_folder}' is empty or does not exist.")
+            if not os.path.exists(self.dicts_folder):
+                print(f"Directory '{self.dicts_folder}' does not exist.")
+            if not os.listdir(self.dicts_folder):
+                print(f"Error: The folder '{self.dicts_folder}' is empty.")
                 return []
+            if not os.path.isdir(self.dicts_folder):
+                raise FileNotFoundError(f"The path '{self.dicts_folder}' is not a directory.")
 
             file_paths = [os.path.join(self.dicts_folder, f) for f in os.listdir(self.dicts_folder) if
                           f.endswith('.dct')]
