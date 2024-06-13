@@ -18,6 +18,7 @@ class DctChoice:
             os.makedirs(self.dicts_folder)
         if not os.path.isdir(self.dicts_folder):
             raise FileNotFoundError(f"The path '{self.dicts_folder}' is not a directory.")
+            
     def load_dict(self, path):
         try:
             with open(path) as json_data:
