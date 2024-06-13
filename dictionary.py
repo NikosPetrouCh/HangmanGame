@@ -15,7 +15,6 @@ class DctChoice:
 
         if not os.path.exists(self.dicts_folder):
             print(f"Directory '{self.dicts_folder}' does not exist.")
-            os.makedirs(self.dicts_folder)
         if not os.path.isdir(self.dicts_folder):
             raise FileNotFoundError(f"The path '{self.dicts_folder}' is not a directory.")
             
