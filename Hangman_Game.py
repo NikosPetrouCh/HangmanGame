@@ -1,52 +1,25 @@
-# SEVENTH TRY
+# EIGHTH TRY
 
 # Notes
 
-# 1. The statement "If 1 <= choice <= 4."
-# 2. Checking the loading dictionaries.
-    # 2.1. Check if the folder is empty
-    # 2.2. Check validation.
-    # 2.3. One or more not valid.
-    # 2.4. Json inside.
-    # 2.5. The keys: positive level, existing desciption etc.
+# 1. Checking the loading dictionaries.
+    # 1.1. Simplify the initialization.
+    # 1.2. First abnormality errors.
+    # 1.3. Then the logical errors (that may occur after eg. file exists and loaded correctly).
 
-# 3. <filename> - is just a string.
-# 4. Quit the game.
-# 5. The Directory of the dictionaries - configuration file.
-# 5. 4rth choice in the menu.
-# 6. Modules - hangman, dictionary.
-# 7. Ctrl-C - exiting game.
-
-# MENU
-
-# -- Choose Disctionary.
-# -- Random Choose dictionary.
-# -- Choose Dictionary by Level.
-# -- Exit.
+# 2. Line 80 - Load the files.
+# 3. Ctrl-C - exiting game.
+# 4. I deleted two functions from Game class - input() and result()
 
 
-
-from hangman import Hangman
-from dictionary import DctChoice
-from enum import Enum
+from hangman import Hangman, GameStatus
+from words import Words
 import random
-
-
-
-class GameStatus(Enum):
-    LETTER_EXIST = 1
-    LETTER_DOES_NOT_EXIST = 2
-    THIS_IS_NOT_LETTER = 3
-    LETTER_ALREADY_USED = 4
-    WON = 5
-    LOST = 6
-    CONTINUE = 7
-    EXITGAME = 8
 
 
 class MainMenu:
     def __init__(self):
-        self.dictionary = DctChoice(folder)
+        self.dictionary = Words(folder)
 
     def show_menu(self):
         while True:
@@ -65,7 +38,7 @@ class MainMenu:
                         game1 = Game(dictionary)
                         game1.play_now()
                 case "2":
-                    dictionary = self.dictionary.choose_random_dictionary()
+                    dictionary = self.dictionary.choose_random_word_file()
                     game1 = Game(dictionary)
                     game1.play_now()
                 case "3":
@@ -78,7 +51,7 @@ class MainMenu:
                     break
                 case _:
                    print ("Invalid choice. Please try again.")
-    
+
     def choose_dictionary(self):
         while True:
             print ("Dictionary Menu:")
@@ -93,7 +66,7 @@ class MainMenu:
 
             if 1 <= choice <= len(self.dictionary.dictionaries):
                 level = descriptions[choice - 1][1]
-                dictionaries = self.dictionary.get_dictionaries_by_level(level)
+                dictionaries = self.dictionary.get_wordsfiles_by_level(level)
                 if dictionaries:
                     return random.choice(dictionaries)
             if choice == len(self.dictionary.dictionaries)+1:
@@ -101,18 +74,20 @@ class MainMenu:
             else:
                 print(f"Invalid input. Please enter a number between 1 and {len(self.dictionary.dictionaries)+1}.")
 
+
     def choose_dictionary_by_level(self):
+
         print("\nChoose Dictionary by Level:")
+        word_files_load = self.dictionary.get_all_words_files()
         levels = {d['level'] for d in self.dictionary.dictionaries}
         print(f"Available levels: {', '.join(map(str, sorted(levels)))}")
         print(f"Or press {len(self.dictionary.dictionaries) + 1} to go back to the main menu")
-
 
         while True:
             try:
                 level = int(input("Enter the level: "))
                 if level in levels:
-                    dictionaries = self.dictionary.get_dictionaries_by_level(level)
+                    dictionaries = self.dictionary.get_wordsfiles_by_level(level)
                     if dictionaries:
                         return random.choice(dictionaries)
                     else:
@@ -123,6 +98,7 @@ class MainMenu:
                     print("Invalid level. Please enter one of the available levels.")
             except ValueError:
                 print("Invalid input. Please enter a number.")
+
 
 
 class Game:
@@ -172,7 +148,7 @@ class Game:
                         break
 
         except KeyboardInterrupt:
-            print("\nGame interrupted. Exiting...")
+            print("\n Game interrupted. Exiting...")
             return
 
     def display_state(self):
