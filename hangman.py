@@ -56,11 +56,3 @@ class Hangman:
             if self.__mistakes >= 6:
                 return GameStatus.LOST
             return GameStatus.LETTER_DOES_NOT_EXIST
-
-    def exit_game(self, command):
-        if command.lower() == "exit":
-            return GameStatus.EXITGAME
-        return GameStatus.CONTINUE
-
-
-
